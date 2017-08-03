@@ -68,27 +68,58 @@ class App extends React.Component {
 //       return <div>{ea.materno}</div>
 //     })}
 // </td>
+// 
+// class Header extends React.Component {
+//    render() {
+//       return (
+//          <div className="h">
+//             <h1>User</h1>
+//          </div>
+//       );
+//    }
+// }
+//
+// class TableRow extends React.Component {
+//    render() {
+//       return (
+//          <tr>
+//             <td className="tbl">{this.props.data.id}:</td>
+//             <td className="tbl">{this.props.data.name}</td>
+//             <td className="tbl">{this.props.data.ap}</td>
+//             <td className="tbl">{this.props.data.am}</td>
+//             <td className="tbl">{this.props.data.age}</td>
+//          </tr>
+//       );
+//    }
+// }
 
-class Header extends React.Component {
-   render() {
-      return (
-         <div className="h">
-            <h1>User</h1>
-         </div>
-      );
-   }
-}
 
-class TableRow extends React.Component {
-   render() {
-      return (
-         <tr>
-            <td className="tbl">{this.props.data.id}:</td>
-            <td className="tbl">{this.props.data.name}</td>
-            <td className="tbl">{this.props.data.ap}</td>
-            <td className="tbl">{this.props.data.am}</td>
-            <td className="tbl">{this.props.data.age}</td>
-         </tr>
-      );
-   }
-}
+
+
+
+
+
+
+
+
+
+//
+// class TableRow extends Component {
+//   removePeople(nombre) {
+//     let items = this.props.item;
+//     console.log(items);
+//   }
+//
+//
+//    render() {
+//       return (
+//          <tr>
+//             <td className="thh">{this.props.items.nombre}</td>
+//             <td className="thh">{this.props.items.paterno}</td>
+//             <td className="thh">{this.props.items.materno}</td>
+//             <td className="thh"><input type="button" className="btn btn-warning btn-xs" value="editar" onClick={this.removePeople.bind(this.props.items.nombre)}/></td>
+//             <td className="thh"><input type="button" className="btn btn-danger btn-xs" value="borrar"/></td>
+//            </tr>
+//       );
+//    }
+// }

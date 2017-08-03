@@ -1,74 +1,96 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import './App.css';
 
 
 class App extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state={
       items:[]
     };
+    this.add = this.add.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.newObject = this.newObject.bind(this);
   }
 
   componentWillMount() {
     fetch("http://localhost/app/app.php/get")
-    .then((response) =>  response.json())
-    .then((res) => {
-      this.setState({
-        items:res
-      })
+    .then((response)=>response.json())
+    .then((res)=>{
+    this.setState({items:res})
     })
+
   }
 
+    add(i){
+          console.log('Usuario: ', i  );
+      }
+
+      handleChange(event) {
+        this.setState({value: event.target.value});
+      }
+
+      newObject(event) {
+        // console.log(this.state.value);
+        this.setState({
+          items: this.state.items.concat(this.state.value)
+        });
+        event.preventDefault();
+      }
 
   render() {
+    console.log(this.state.items);
+    let Users = this.state.items.map((d) =>
+                              <tr key={d.id}>
+                                <td>{d.nombre}</td>
+                                <td>{d.nombre}</td>
+                                <td>{d.materno}</td>
+                                <td><input type="button" value="Ver" className="btn btn-info btn-xs" onClick={this.add.bind(this, d)}></input></td>
+                              </tr>);
     return (
       <div className="container-fluid">
+        <br/>
         <div className="row">
-          <br/><br/>
-          <div className="col-md-6">
+        <div className="col-md-6">
           <table className="table table-condensed">
             <thead>
               <tr>
-              <th className="thh">Nombre</th>
-              <th className="thh">Paterno</th>
-              <th className="thh">Materno</th>
-              <th className="thh">---</th>
-              <th className="thh">---</th>
+                <th className="h">Nombre</th>
+                <th className="h">Paterno</th>
+                <th className="h">Materno</th>
+                <th className="h">---</th>
               </tr>
             </thead>
-            <tbody>
-              {this.state.items.map((person, i)=> <TableRow key={i} items={person}/>)}
+            <tbody className="thh">
+              {Users}
             </tbody>
           </table>
         </div>
-      </div>
-
+        <div className="col-md-5">
+          <hr/>
+            <div className="form-group">
+            <label>Nombre</label>
+            <input type="text" className="form-control" value={this.state.nombre} onChange={this.handleChange} ></input>
+          </div>
+          <div className="form-group">
+            <label>Paterno</label>
+            <input type="text" className="form-control" value={this.state.paterno} ></input>
+          </div>
+          <div className="form-group">
+            <label>Materno</label>
+            <input type="text" className="form-control" value={this.state.materno} ></input>
+          </div>
+          <button className="btn btn-success btn-lg-block" onClick={this.newObject}>Guardar</button>
+        </div>
+        </div>
       </div>
     );
-
   }
 }
 
-class TableRow extends Component {
-  removePeople(nombre) {
-    let items = this.props.item;
-    console.log(items);
-  }
 
 
-   render() {
-      return (
-         <tr>
-            <td className="thh">{this.props.items.nombre}</td>
-            <td className="thh">{this.props.items.paterno}</td>
-            <td className="thh">{this.props.items.materno}</td>
-            <td className="thh"><input type="button" className="btn btn-warning btn-xs" value="editar" onClick={this.removePeople.bind(this.props.items.nombre)}/></td>
-            <td className="thh"><input type="button" className="btn btn-danger btn-xs" value="borrar"/></td>
-           </tr>
-      );
-   }
-}
 
-  export default App;
+
+
+export default App;
