@@ -68,7 +68,7 @@ class App extends React.Component {
 //       return <div>{ea.materno}</div>
 //     })}
 // </td>
-// 
+//
 // class Header extends React.Component {
 //    render() {
 //       return (
@@ -96,8 +96,12 @@ class App extends React.Component {
 
 
 
-
-
+/*
+            var field= e.target.name;
+            var value= e.target.value;
+            this.state.user[field] = value;
+            this.setState({user : this.state.user});
+*/
 
 
 
@@ -123,3 +127,57 @@ class App extends React.Component {
 //       );
 //    }
 // }
+
+
+
+
+
+//
+
+render() {
+  let Users = this.state.items.map((d) =>
+                            <tr key={d.id}>
+                              <td>{d.nombre}</td>
+                              <td>{d.paterno}</td>
+                              <td>{d.materno}</td>
+                              <td><input type="button" value="Ver" className="btn btn-info btn-xs" onClick={this.add.bind(this, d)}></input></td>
+                            </tr>);
+  return (
+    <div className="container-fluid">
+      <br/>
+      <div className="row">
+      <div className="col-md-6">
+        <table className="table table-condensed">
+          <thead>
+            <tr>
+              <th className="h">Nombre</th>
+              <th className="h">Paterno</th>
+              <th className="h">Materno</th>
+              <th className="h">---</th>
+            </tr>
+          </thead>
+          <tbody className="thh">
+            {Users}
+          </tbody>
+        </table>
+      </div>
+      <div className="col-md-5">
+        <hr/>
+          <div className="form-group">
+          <label>Nombre</label>
+          <input type="text" className="form-control" name="nombre" value={this.state.user.nombre || ''} onChange={this.handleChange} ></input>
+        </div>
+        <div className="form-group">
+          <label>Paterno</label>
+          <input type="text" className="form-control" name="paterno" value={this.state.user.paterno || ''} onChange={this.handleChange}  ></input>
+        </div>
+        <div className="form-group">
+          <label>Materno</label>
+          <input type="text" className="form-control" name="materno" value={this.state.user.materno || ''} onChange={this.handleChange}  ></input>
+        </div>
+        <button className="btn btn-success btn-lg-block" onClick={this.newObject}>Guardar</button>
+      </div>
+      </div>
+    </div>
+  );
+}

@@ -1,95 +1,94 @@
 import React, { Component } from 'react';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import {Button, Grid, Col, Nav, NavItem, Panel} from 'react-bootstrap';
 import './App.css';
-
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state={
-      items:[]
-    };
+      items:[],
+      user:{}
+      };
     this.add = this.add.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.newObject = this.newObject.bind(this);
   }
 
   componentWillMount() {
-    fetch("http://localhost/app/app.php/get")
+    fetch("http://10.0.60.1/app/app.php/get")
     .then((response)=>response.json())
     .then((res)=>{
     this.setState({items:res})
     })
-
   }
 
     add(i){
           console.log('Usuario: ', i  );
       }
 
-      handleChange(event) {
-        this.setState({value: event.target.value});
-      }
+    handleChange (e){
+      const {name, value} = e.target;
+       let user = this.state.user;
+       user[name] = value;
+       return this.setState({user});
+     }
 
-      newObject(event) {
-        // console.log(this.state.value);
-        this.setState({
-          items: this.state.items.concat(this.state.value)
-        });
-        event.preventDefault();
-      }
+    newObject(e) {
+      e.preventDefault();
+      this.Dbtn = true;
+      fetch("http://10.0.60.1/app/app.php/uno", {
+        method: 'POST',
+        body:JSON.stringify({nombre:this.state.user.nombre, paterno:this.state.user.paterno, materno:this.state.user.materno})
+      }).then((response) => {
+        setTimeout(function () {
+          location.reload();
+        }, 1000);
+      });
+    }
 
   render() {
-    console.log(this.state.items);
-    let Users = this.state.items.map((d) =>
-                              <tr key={d.id}>
-                                <td>{d.nombre}</td>
-                                <td>{d.nombre}</td>
-                                <td>{d.materno}</td>
-                                <td><input type="button" value="Ver" className="btn btn-info btn-xs" onClick={this.add.bind(this, d)}></input></td>
-                              </tr>);
     return (
-      <div className="container-fluid">
+      <Grid>
+        <Nav bsStyle="tabs" activeKey="1" onSelect={this.handleSelect}>
+        <NavItem eventKey="1" href="/">Usuarios</NavItem>
+        <NavItem eventKey="2"  href="/">Productos</NavItem>
+      </Nav>
         <br/>
-        <div className="row">
-        <div className="col-md-6">
-          <table className="table table-condensed">
-            <thead>
-              <tr>
-                <th className="h">Nombre</th>
-                <th className="h">Paterno</th>
-                <th className="h">Materno</th>
-                <th className="h">---</th>
-              </tr>
-            </thead>
-            <tbody className="thh">
-              {Users}
-            </tbody>
-          </table>
-        </div>
-        <div className="col-md-5">
+        <Col md={6}>
+          <BootstrapTable data={this.state.items} pagination options={ {noDataText: 'No hay registros que mostrar :( '}}>
+                <TableHeaderColumn dataField='id' isKey>ID</TableHeaderColumn>
+                <TableHeaderColumn dataField='nombre'>Nombre</TableHeaderColumn>
+                <TableHeaderColumn dataField='paterno'>Apellido Paterno</TableHeaderColumn>
+                <TableHeaderColumn dataField='materno'>Apellido Materno</TableHeaderColumn>
+          </BootstrapTable>
+        </Col>
+        <Col md={5}>
           <hr/>
             <div className="form-group">
             <label>Nombre</label>
-            <input type="text" className="form-control" value={this.state.nombre} onChange={this.handleChange} ></input>
+            <input type="text" className="form-control" name="nombre" value={this.state.user.nombre || ''} onChange={this.handleChange} ></input>
           </div>
           <div className="form-group">
             <label>Paterno</label>
-            <input type="text" className="form-control" value={this.state.paterno} ></input>
+            <input type="text" className="form-control" name="paterno" value={this.state.user.paterno || ''} onChange={this.handleChange}  ></input>
           </div>
           <div className="form-group">
             <label>Materno</label>
-            <input type="text" className="form-control" value={this.state.materno} ></input>
+            <input type="text" className="form-control" name="materno" value={this.state.user.materno || ''} onChange={this.handleChange}  ></input>
           </div>
-          <button className="btn btn-success btn-lg-block" onClick={this.newObject}>Guardar</button>
-        </div>
-        </div>
-      </div>
+          <Button bsStyle="info" bsSize="small" block onClick={this.newObject} disabled={this.Dbtn}>Registrar</Button>
+
+          <br/><br/>
+            <Panel header={"Alerta"} bsStyle="success">
+              Registro Realizado Correctamente :D
+            </Panel>
+        </Col>
+
+      </Grid>
     );
   }
 }
-
-
-
 
 
 
