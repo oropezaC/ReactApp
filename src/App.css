@@ -31,7 +31,7 @@
 }
 
 .tbl{
-  border: 1px solid black;
+  text-align: center;
 }
 
 .tlabel{
@@ -44,4 +44,10 @@
 
 .thh{
   text-align: center;;
+}
+
+.bt{
+  margin: 0 auto;
+  margin-left: 10px;
+  margin-right: -14px;
 }

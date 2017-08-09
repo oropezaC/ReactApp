@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Grid,Col,Button,Panel} from 'react-bootstrap';
-import App from '../App';
+// import App from '../App';
 
 
 class Reg extends Component {
@@ -32,10 +32,10 @@ class Reg extends Component {
       method: 'POST',
       body:JSON.stringify({nombre:this.state.user.nombre, paterno:this.state.user.paterno, materno:this.state.user.materno})
     }).then((response) => {
-      
-      // setTimeout(function () {
-      //   location.reload();
-      // }, 1000);
+        console.log(response);
+       setTimeout(function () {
+       location.reload();
+      }, 1000);
     });
   }
 
