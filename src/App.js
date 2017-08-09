@@ -65,7 +65,7 @@ class App extends Component {
   update(cell, row, enumObject, rowIndex){
     console.log(row);
     this.setState({
-      user:{nombre:row.nombre,paterno:row.paterno,materno:row.materno},
+      user:{id:row.id,nombre:row.nombre,paterno:row.paterno,materno:row.materno},
       isShowingModal: ! this.state.isShowingModal
     });
    }
@@ -83,6 +83,15 @@ class App extends Component {
     })
     e.preventDefault();
     console.log(this.state.user)
+     fetch("http://10.0.60.1/app/app.php/update", {
+      method: 'POST',
+      body:JSON.stringify({id:this.state.user.id,nombre:this.state.user.nombre, paterno:this.state.user.paterno, materno:this.state.user.materno})
+    }).then((response) => {
+        console.log(response);
+       setTimeout(function () {
+       location.reload();
+      }, 1000);
+    });
   }
 
   render() {
