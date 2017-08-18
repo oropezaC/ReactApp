@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Grid,Col,Button,Panel} from 'react-bootstrap';
-// import App from '../App';
 
+import './css/st.css'
 
 class Reg extends Component {
   constructor(props){
@@ -41,9 +41,10 @@ class Reg extends Component {
 
   render() {
     return (
+      <div className="formulario">
       <Grid>
-        <Col md={5}>
-          <br/><br/><br/>
+        <Col md={4}>
+          <h1>Registro</h1>
           <div className="form-group">
             <label>Nombre</label>
             <input type="text" className="form-control" name="nombre" value={this.state.user.nombre || ''} onChange={this.handleChange} ></input>
@@ -65,6 +66,7 @@ class Reg extends Component {
           }
         </Col>
       </Grid>
+      </div>
     );
   }
 }
